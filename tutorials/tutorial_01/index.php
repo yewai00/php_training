@@ -12,7 +12,7 @@
 	<div class="checkmake">
 	<?php	
 		$flag = 0;
-        $grow = 8;
+    	$grow = 8;
 		for($row = 0; $row < $grow; $row++) {
 			for($square = 0; $square < $grow; $square++) {
 				if(!$flag) {
