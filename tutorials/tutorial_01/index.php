@@ -12,8 +12,9 @@
 	<div class="checkmake">
 	<?php	
 		$flag = 0;
-		for($row = 0; $row < 8; $row++) {
-			for($square = 0; $square < 8; $square++) {
+        $grow = 8;
+		for($row = 0; $row < $grow; $row++) {
+			for($square = 0; $square < $grow; $square++) {
 				if(!$flag) {
 					echo "<div class='white'></div>";
 					$flag = 1;
