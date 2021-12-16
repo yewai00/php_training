@@ -14,7 +14,6 @@
             header("location: index.php?day=$day_age&oldBday=$birthday");
         }      
     }
-
     elseif($now < $bday) {
         $age = 0;
         header("location: index.php?age=$age&oldBday=$birthday");
