@@ -15,7 +15,7 @@
         }
     }
 
-    elseif($now <= $bday) {
+    elseif($now < $bday) {
         $age = 0;
         header("location: index.php?age=$age");
     }

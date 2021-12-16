@@ -8,10 +8,7 @@
 </head>
 <body>
     <?php 
-        $month = date('m');
-        $day = date('d');
-        $year = date('Y');
-        $today = $year . '-' . $month . '-' . $day;
+        $today = date("Y-m-d");
     ?>
     <h3>Today is <?php echo $today ?></h3>
     <form action="calculateAge.php" method="GET">
