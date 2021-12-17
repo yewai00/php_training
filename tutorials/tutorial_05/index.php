@@ -37,7 +37,7 @@
                     foreach ($sheet as $cell) {
                         if($cell !== null) {
                             if($firstLine) {
-                                echo "<th>" . $cell . "</td>";
+                                echo "<th>" . $cell . "</th>";
                             }
                             else {
                                 echo '<td>' . $cell . '</td>';
