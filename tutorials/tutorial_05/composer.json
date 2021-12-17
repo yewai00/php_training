@@ -1,0 +1,13 @@
+{
+    "name": "yewai/tutorial05",
+    "authors": [
+        {
+            "name": "Ye Wai",
+            "email": "yewai.cs@gmail.com"
+        }
+    ],
+    "require": {
+        "phpoffice/phpspreadsheet": "^1.20",
+        "phpoffice/phpword": "^0.18.2"
+    }
+}
