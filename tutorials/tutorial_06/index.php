@@ -30,7 +30,7 @@
                     $dir = $_POST["dir"];
                     if ($_FILES["file"]["error"]) {
                         if ($_FILES["file"]["error"] == 1) {
-                            echo "<p class='alert'>The uploaded file exceeds the upload_max_filesize. File size must be exceeded 2MB.</p>";
+                            echo "<p class='alert'>The uploaded file exceeds the upload_max_filesize. File size must not be exceeded 2MB.</p>";
                         }
                         else {
                             echo "<p>file error</p>";
