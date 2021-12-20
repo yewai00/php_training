@@ -1,3 +1,9 @@
+<?php 
+    require_once 'vendor/autoload.php';
+    use \PhpOffice\PhpWord\IOFactory;
+    use \PhpOffice\PhpWord\Element;
+    use \PhpOffice\PhpSpreadsheet\Reader\Xlsx;
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -24,8 +30,7 @@
         <section>
             <h3>2) Content of excel file</h3>
             <?php
-                require 'vendor/autoload.php';
-                $reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
+                $reader = new Xlsx();
                 $reader->setReadDataOnly(true);
                 $excelfile = "excel_file.xlsx";
                 $spreadsheet = $reader->load($excelfile);
@@ -65,13 +70,13 @@
             <h3>4) Content of doc file</h3>
             <?php
                 $docfile = 'doc_file.doc';
-                error_reporting(E_ALL ^ E_DEPRECATED);
-                $phpWord = \PhpOffice\PhpWord\IOFactory::load($docfile);
+                error_reporting(E_ALL & ~E_DEPRECATED);
+                $phpWord = IOFactory::load($docfile);
                 foreach ($phpWord->getSections() as $section) {
                     foreach ($section->getElements() as $element) {
-                        if ($element instanceof \PhpOffice\PhpWord\Element\TextRun) {
+                        if ($element instanceof Element\TextRun) {
                             foreach ($element->getElements() as $el) {
-                                if ($el instanceof \PhpOffice\PhpWord\Element\Text) {
+                                if ($el instanceof Element\Text) {
                                     echo  "<p>".$el->getText()."</p>";
                                 }
                             }
