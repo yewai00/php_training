@@ -12,8 +12,13 @@ h3 {
 }
 
 form {
-  width: 365px;
   margin: 10px 0 20px;
+}
+
+.label {
+  display: inline-block;
+  width: 110px;
+  text-align: right;
 }
 
 .dir {
@@ -22,10 +27,6 @@ form {
 
 .dir #dir {
   padding: 3px;
-}
-
-.file {
-  margin-left: 37px;
 }
 
 .btn {
