@@ -28,7 +28,6 @@
                 // server validation user input not to be spaces
                 if (!empty($dir)) {
                     $dir = $_POST["dir"];
-                    ini_set('upload_max_filesize', "3M");
                     if ($_FILES["file"]["error"]) {
                         if ($_FILES["file"]["error"] == 1) {
                             echo "<p class='alert'>The uploaded file exceeds the upload_max_filesize. File size must be exceeded 2MB.</p>";
