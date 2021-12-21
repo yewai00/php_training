@@ -1,0 +1,51 @@
+.container {
+  width: 1080px;
+  margin: 0 auto;
+}
+
+h3 {
+  margin: 20px 0;
+  font-size: 30px;
+  font-weight: bold;
+  text-align: center;
+}
+
+form {
+  width: 80%;
+  margin: 20px auto;
+}
+
+.img {
+  position: relative;
+  right: 50%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+#data-box {
+  width: 80%;
+  margin: 0 auto;
+  margin: 20px 0;
+  padding: 10px;
+}
+
+.btn {
+  margin: 0 0 0 118px;
+  padding: 7px;
+  border: none;
+  background-color: #1eb1e9;
+  color: #fff;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.alert {
+  color: #f02e2e;
+  text-align: center;
+}
+
+label {
+  margin-left: 75px;
+  font-size: 18px;
+  font-weight: 500;
+}
