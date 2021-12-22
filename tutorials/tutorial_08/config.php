@@ -7,7 +7,7 @@
         die('Could not connect: ' . mysqli_connect_error());  
     }
     $sql = 'CREATE DATABASE IF NOT EXISTS mydb;'; 
-    if(mysqli_query($connect, $sql)) {  
+    if (mysqli_query($connect, $sql)) {  
         echo 'Database mydb created successfully.<br>';
         $tableQuery = 'CREATE TABLE IF NOT EXISTS persons
         (
@@ -20,14 +20,12 @@
         city varchar(15)
         )';
         mysqli_select_db($connect, "mydb");
-        if(mysqli_query($connect, $tableQuery)) {
+        if (mysqli_query($connect, $tableQuery)) {
             echo 'Persons table created successfully.<a href="index.php">Goto home page.</a>';
-        }
-        else {
+        } else {
             echo 'Table is not created.';
         }
-    }
-    else {  
+    } else {  
         echo "Sorry, database creation failed ".mysqli_error($connect);  
     }  
     mysqli_close($connect);  

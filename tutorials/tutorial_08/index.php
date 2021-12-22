@@ -41,13 +41,12 @@
                     echo "<td>".$row['city']."</td>"; 
                     echo "<td>
                             <a href=\"update.php?id={$row['id']}\">update</a> | 
-                            <a href=\"delete.php?id={$row['id']}\" class='alert')'>delete</a>
+                            <a href=\"delete.php?id={$row['id']}\" class='alert'>delete</a>
                         </td>";
                     echo "</tr>"; 
                 } //select one record in each time
                 echo "</table>";
-               }
-            else {  
+               } else {  
                 echo "persons table have no record yet.";  
             }  
             if($delete) {

@@ -4,5 +4,7 @@
     $execute = mysqli_query($connect, $insert);
     if($execute) {
         echo "one record inserted.";
+        echo "<a href='index.php'>home</a>";
     }
+    mysqli_close($connect);
 ?>
