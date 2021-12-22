@@ -1,0 +1,92 @@
+.container {
+  width: 900px;
+  margin: 0 auto;
+}
+
+h3 {
+  margin: 20px 0;
+  font-size: 30px;
+  font-weight: bold;
+  text-align: center;
+}
+
+a {
+  color: #4242d4;
+  text-decoration: none;
+}
+
+.alert {
+  color: #f12f2f;
+}
+
+table, 
+th, 
+td {
+  border: 1px solid black;
+}
+
+table {
+  margin: 20px auto;
+  border-collapse: collapse;
+}
+
+th,
+td {
+  padding: 10px;
+}
+
+th {
+  font-weight: bold;
+}
+
+form {
+  width: 500px;
+  margin: 0 auto;
+}
+
+label {
+  margin-bottom: 10px;
+}
+
+input {
+  display: block;
+  width: 480px;
+  margin: 10px auto 20px;
+  padding: 7px;
+}
+
+.btn {
+  width: unset;
+  margin: 10px 0 20px;
+  padding: 10px;
+  border: none;
+  background-color: rgb(47, 47, 230);
+  color: #fff;
+  border-radius: 3px;
+}
+
+.center {
+  text-align: center;
+}
+
+.home {
+  display: block;
+  width: 80px;
+  margin: 10px 0 20px;
+  margin-left: 200px;
+  padding: 10px;
+  border: none;
+  background-color:rgb(59, 128, 14);
+  color: #fff;
+  text-align: center;
+  border-radius: 3px;
+}
+
+#id {
+  display: none;
+}
+
+.link {
+  width: 100px;
+  margin-left: 165px;
+}
