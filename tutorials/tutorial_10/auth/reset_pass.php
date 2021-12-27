@@ -23,11 +23,11 @@
             $emailerr = "email required";
             $isEmpty = true;
         }
-        if(!$isEmpty) {
+        if (!$isEmpty) {
             $check = "SELECT email_address FROM users WHERE email_address='{$email}'";
             $execute = mysqli_query($connect, $check);
             $row = mysqli_fetch_assoc($execute);
-            if($row){
+            if ($row){
                 session_start();
                 $_SESSION['email'] = $email;
                 header('location: send_mail.php');
@@ -66,6 +66,6 @@
             }
         ?>
     </div>
-    
+    <!-- ./container -->
 </body>
 </html>

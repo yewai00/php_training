@@ -22,6 +22,7 @@ td {
 }
 
 table {
+  width: 100%;
   margin: 20px auto;
   border-collapse: collapse;
 }
@@ -101,7 +102,7 @@ input {
 
 .link {
   width: 100px;
-  margin-left: 165px;
+  margin-left: unset;
 }
 
 .confirm {
@@ -134,7 +135,15 @@ input {
 }
 
 a.reset {
-  width: 500px;
   display: block;
+  width: 500px;
   margin: 0 auto;
+}
+
+.logout {
+  display: inline-block;
+  padding: 10px;
+  border: 1px solid #f12f2f;
+  color: #f12f2f;
+  border-radius: 5px;
 }

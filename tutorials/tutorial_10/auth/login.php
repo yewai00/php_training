@@ -29,7 +29,7 @@
             $passerr = "password required";
             $isEmpty = true;
         }
-        if(!$isEmpty) {
+        if (!$isEmpty) {
             $check = "SELECT email_address, pass FROM users WHERE email_address='{$email}' AND pass=MD5('{$pass}')";
             $execute = mysqli_query($connect, $check);
             $row = mysqli_fetch_assoc($execute);
@@ -60,14 +60,14 @@
             <label for="email">Email:</label>
             <input type="text" name="email" id="email">
             <?php 
-                if(isset($emailerr)) {
-                    echo "<span class='alert'>$emailerr</span>"; 
+                if (isset($emailerr)) {
+                    echo "<span class='alert'>$emailerr</span><br><br>"; 
                 }
             ?>
             <label for="pass">Password:</label>
             <input type="password" name="pass" id="pass">
             <?php 
-                if(isset($emailerr)) {
+                if (isset($emailerr)) {
                     echo "<span class='alert'>$passerr</span>"; 
                 }
             ?>
@@ -75,11 +75,11 @@
         </form>
         <a href="reset_pass.php" class="reset">reset password</a>
         <?php
-            if($wrong) {
+            if ($wrong) {
                 echo '<p class="alert-box">wrong email or password</p>';
             }
         ?>
     </div>
-    
+    <!-- ./container -->
 </body>
 </html>

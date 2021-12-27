@@ -14,6 +14,7 @@
 <body>
     <div class="container">
         <h3>Tutorial 09</h3>
+        <a href="auth/logout.php" class="logout">logout</a>
         <a href="create.php" class="home link">Create a person</a>
         <?php
             include_once('connect.php');
