@@ -23,14 +23,14 @@
         }
     }
     if (isset($_POST['submit'])) {
-        if (!empty(InputValidate($_POST['email']))) {
-            $email = InputValidate($_POST['email']);
+        if (!empty(inputValidate($_POST['email']))) {
+            $email = inputValidate($_POST['email']);
         } else {
             $emailerr = "email required";
             $isEmpty = true;
         }
-        if (!empty(InputValidate($_POST['pass']))) {
-            $pass = InputValidate($_POST['pass']);
+        if (!empty(inputValidate($_POST['pass']))) {
+            $pass = inputValidate($_POST['pass']);
         } else {
             $passerr = "password required";
             $isEmpty = true;

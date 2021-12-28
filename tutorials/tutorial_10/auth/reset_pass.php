@@ -17,8 +17,8 @@
         return $data;
     }
     if (isset($_POST['submit'])) {
-        if (!empty(InputValidate($_POST['email']))) {
-            $email = InputValidate($_POST['email']);
+        if (!empty(inputValidate($_POST['email']))) {
+            $email = inputValidate($_POST['email']);
         } else {
             $emailerr = "email required";
             $isEmpty = true;
