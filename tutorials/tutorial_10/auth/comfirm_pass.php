@@ -60,6 +60,8 @@ if (!isset($_GET['code'])) {
                 <input type="password" name="cpass" id="pass">   
                 <input type="submit" value="change" name="submit" class="btn">
             </form>
+        <?php else: ?>
+            <p>link expired.</p>
         <?php endif ?>
         <?php 
             if ($empty) {
