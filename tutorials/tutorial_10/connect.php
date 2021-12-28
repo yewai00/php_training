@@ -1,7 +1,7 @@
 <?php
     $host = "localhost";
     $user = "root";
-    $password = "p@ssword"; //change your password
+    $password = "password"; //change your password
     $db = "mydb";
     $connect = mysqli_connect($host, $user, $password, $db);
     if (!$connect) {

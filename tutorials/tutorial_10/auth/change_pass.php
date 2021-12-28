@@ -39,7 +39,7 @@ if (isset($_POST['submit'])) {
         $query = "UPDATE users SET pass = MD5('$pass') WHERE email_address='$email';";
         $execute = mysqli_query($connect, $query);
         if ($execute) {
-            echo "password changed successfully.";
+            header("location: login.php?pass=success");
         }
     } else {
         header("location: comfirm_pass.php?same=false&code=$code");

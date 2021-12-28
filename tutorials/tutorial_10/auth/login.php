@@ -2,6 +2,7 @@
     include_once('../connect.php');
     $isEmpty = false;
     $wrong = false;
+    $success = false;
     /**
     * Validate the input
     * @param $data
@@ -15,6 +16,11 @@
         $data = strip_tags($data);
         $data = mysqli_real_escape_string($connect, $data);
         return $data;
+    }
+    if(isset($_GET['pass'])) {
+        if($_GET['pass'] == 'success') {
+            $success = true;
+        }
     }
     if (isset($_POST['submit'])) {
         if (!empty(InputValidate($_POST['email']))) {
@@ -77,6 +83,9 @@
         <?php
             if ($wrong) {
                 echo '<p class="alert-box">wrong email or password</p>';
+            }
+            if ($success) {
+                echo '<p class="success">password changed successfully.</p>';
             }
         ?>
     </div>

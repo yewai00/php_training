@@ -39,6 +39,7 @@ if (isset($_SESSION['email'])) {
     
         //Content
         $url = "http://". $_SERVER['HTTP_HOST'] . dirname($_SERVER['PHP_SELF'])."/comfirm_pass.php?code=$code";
+        echo $url;
         $mail->isHTML(true);                                  //Set email format to HTML
         $mail->Subject = 'Reset password link';
         $mail->Body    = "<h1>You requested a password reset link</h1>

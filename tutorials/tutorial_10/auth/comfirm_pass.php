@@ -2,21 +2,42 @@
 include_once("../connect.php");
 $empty = false;
 $same = true;
-session_start();
-$email = $_SESSION['email'];
+$samecode = false;
 if (!isset($_GET['code'])) {
-    echo "invalid link";
+    exit("invalid link");
+} else {
+    if (isset($_GET['empty'])) {
+        $empty = $_GET['empty'];
+    }
+    if (isset($_GET['same'])) {
+        $same = false;
+    }
+    $code = $_GET['code'];
+    $check = "SELECT otcode FROM otplinks;";
+    $runCheck = mysqli_query($connect, $check);
+    while($codeArr = mysqli_fetch_assoc($runCheck)) {
+        if($codeArr['otcode'] == $code){
+            $samecode = true;
+        };
+    };
+    if($samecode) {
+        session_start();
+        if(isset($_SESSION['email'])) {
+            $email = $_SESSION['email'];
+        } else {
+            $query = "SELECT email_address FROM otplinks WHERE otcode='$code' ORDER BY id DESC LIMIT 1;";
+            $execute = mysqli_query($connect, $query);
+            $emailArr = mysqli_fetch_assoc($execute);
+            $email = $emailArr['email_address'];
+            $_SESSION['email'] = $email;
+        }
+        $query = "SELECT * FROM otplinks WHERE email_address='$email' ORDER BY id DESC LIMIT 1;";
+        $execute = mysqli_query($connect, $query);
+        $row = mysqli_fetch_assoc($execute);
+    } else {
+        exit("invalid link");
+    }
 }
-if (isset($_GET['empty'])) {
-    $empty = $_GET['empty'];
-}
-if (isset($_GET['same'])) {
-    $same = false;
-}
-$code = $_GET['code'];
-$query = "SELECT * FROM otplinks WHERE email_address='$email' order by id desc Limit 1 ;";
-$execute = mysqli_query($connect, $query);
-$row = mysqli_fetch_assoc($execute);
 ?>
 <!DOCTYPE html>
 <html lang="en">
