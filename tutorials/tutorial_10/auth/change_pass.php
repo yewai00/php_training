@@ -36,6 +36,8 @@ if (isset($_POST['submit'])) {
     $email = $_SESSION['email'];
     
     if ($pass == $cpass) {
+        $expired_flag = "UPDATE otplinks SET expired='YES' WHERE otcode='$code'";
+        $execute_expired = mysqli_query($connect, $expired_flag);
         $query = "UPDATE users SET pass = MD5('$pass') WHERE email_address='$email';";
         $execute = mysqli_query($connect, $query);
         if ($execute) {

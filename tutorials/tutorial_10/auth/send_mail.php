@@ -15,7 +15,7 @@ session_start();
 if (isset($_SESSION['email'])) {
     $email = $_SESSION['email'];
     $code = uniqid(true);
-    $query = "INSERT INTO otplinks (email_address, otcode) VALUES ('$email', '$code');";
+    $query = "INSERT INTO otplinks (email_address, otcode, expired) VALUES ('$email', '$code', 'NO');";
     $execute = mysqli_query($connect, $query);
     if (!$query) {
         exit("error");

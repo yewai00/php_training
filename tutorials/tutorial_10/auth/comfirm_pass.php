@@ -51,7 +51,7 @@ if (!isset($_GET['code'])) {
 </head>
 <body>
     <div class="container">
-        <?php if($row['otcode'] == $code): ?>
+        <?php if($row['otcode'] == $code and $row['expired'] == 'NO'): ?>
             <h3>Reset your password</h3>
             <form action="change_pass.php?code=<?=$code?>" method="post">
                 <label for="pass">Password:</label>

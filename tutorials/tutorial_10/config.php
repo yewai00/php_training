@@ -29,7 +29,8 @@
             id int NOT NULL AUTO_INCREMENT,
             PRIMARY KEY(id),
             email_address VARCHAR(32),
-            otcode VARCHAR(32)       
+            otcode VARCHAR(32),
+            expired VARCHAR(32)       
         );';// otplinks table create query
         mysqli_select_db($connect, "mydb"); // use database mydb
         if (mysqli_query($connect, $tableQuery)) {
