@@ -23,17 +23,20 @@
         .fa-btn {
             margin-right: 6px;
         }
+
     </style>
 </head>
 <body id="app-layout">
     <nav class="navbar navbar-default">
         <div class="container">
-            <div class="navbar-header">
+            <div class="navbar-header d-flex justify-content-evenly">
 
                 <!-- Branding Image -->
-                <a class="navbar-brand" href="{{ url('/') }}">
+                <a class="navbar-brand p2" href="{{ url('/') }}">
                     Task List
                 </a>
+                <a class="navbar-brand p2" href="{{ route('logout') }}">Logout</a>
+                
             </div>
 
         </div>

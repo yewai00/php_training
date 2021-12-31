@@ -14,6 +14,7 @@ class TaskService implements TaskServiceInterface {
      * task dao
      */
     private $taskDao;
+    
     /**
      * Class Constructor
      * @param TaskDaoInterface
@@ -22,8 +23,10 @@ class TaskService implements TaskServiceInterface {
     public function __construct(TaskDaoInterface $taskDao) {
         $this->taskDao = $taskDao;
     }
+
     /**
      * Get all tasks
+     * @return array $tasks Task list
      */
     public function getTasks() {
         return $this->taskDao->getTasks();
@@ -31,14 +34,17 @@ class TaskService implements TaskServiceInterface {
 
     /**
      * Add a new task
+     * @param Request $request request with inputs
+     * @return Object $task Task Object
      */
     public function addTask(Request $request) {
         return $this->taskDao->addTask($request);
     }
+
     /**
      * Delete task
+     * @param string $id task id
      */
-
     public function deleteTask($id) {
         return $this->taskDao->deleteTask($id);
     }
