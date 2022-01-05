@@ -6,6 +6,8 @@ use App\Contracts\Dao\Student\StudentDaoInterface;
 use App\Models\Student;
 use App\Models\Major;
 use Illuminate\Http\Request;
+use App\Imports\StudentsImport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class StudentDao implements StudentDaoInterface {
     
@@ -78,5 +80,24 @@ class StudentDao implements StudentDaoInterface {
     public function destroy($id)
     {
         Student::find($id)->delete();
+    }
+
+    /**
+     * import data to students table
+     * @param Request $request
+     * @return void
+     */
+    public function import(Request $request) {
+        $students = Excel::toCollection(new StudentsImport(), $request->file('import_file'));
+        foreach($students[0] as $student) {
+            Student::where('id', $student[0])->update([
+                'first_name' => $student[1],
+                'last_name' => $student[2],
+                'email' => $student[3],
+                'phone' => $student[4],
+                'address' => $student[5],
+                'major_id' => $student[6]
+            ]);
+        }
     }
 }

@@ -44,4 +44,11 @@ interface StudentDaoInterface {
      * @return void
      */
     public function destroy($id);
+
+    /**
+     * import data to students table
+     * @param Request $request
+     * @return void
+     */
+    public function import(Request $request);
 }

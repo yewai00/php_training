@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Contracts\Services\Student\StudentServiceInterface;
 use App\Contracts\Services\Major\MajorServiceInterface;
+use App\Exports\StudentsExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class StudentController extends Controller
 {
@@ -118,5 +120,28 @@ class StudentController extends Controller
     {
         $this->studentInterface->destroy($id);
         return redirect('/students')->with('success','You have successfully deleted.');
+    }
+
+    /**
+     * download as excel file from student table
+     * 
+     */
+    public function export() 
+    {
+        return Excel::download(new StudentsExport, 'students.xlsx');
+    }
+
+    /**
+     * import data to student table
+     * @param Request $request
+     * @return url to students page
+     */
+    public function import(Request $request) 
+    {   
+        $request->validate([
+            'import_file' => 'required',
+        ]);
+        $this->studentInterface->import($request);
+        return redirect('/students')->with('success','You have successfully imported.');;
     }
 }

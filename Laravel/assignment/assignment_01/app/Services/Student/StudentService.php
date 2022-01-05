@@ -76,4 +76,13 @@ class StudentService implements StudentServiceInterface {
     {
         return $this->studentDao->destroy($id);
     }
+
+    /**
+     * import data to students table
+     * @param Request $request
+     */
+    public function import(Request $request)
+    {
+        return $this->studentDao->import($request);
+    }
 }   
