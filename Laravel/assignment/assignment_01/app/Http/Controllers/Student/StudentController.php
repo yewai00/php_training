@@ -5,22 +5,30 @@ namespace App\Http\Controllers\Student;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Contracts\Services\Student\StudentServiceInterface;
+use App\Contracts\Services\Major\MajorServiceInterface;
 
 class StudentController extends Controller
 {
-     /**
-     * task interface
+    /**
+     * student interface
      */
     private $studentInterface;
 
     /**
+     * major interface
+     */
+    private $majorInterface;
+
+    /**
      * Class Contructor
-     * @param StudentServiceInterface $studentServiceInterface
+     * @param StudentServiceInterface $studentServiceInterface,
+     * @param MajorServiceInterface $majorInerface
      * @return void
      */
-    public function __construct(StudentServiceInterface $studentServiceInterface)
+    public function __construct(StudentServiceInterface $studentServiceInterface, MajorServiceInterface $majorInerface)
     {
         $this->studentInterface = $studentServiceInterface;
+        $this->majorInterface = $majorInerface;
     }
 
     /**
@@ -35,13 +43,13 @@ class StudentController extends Controller
     }
 
     /**
-     * show create page
+     * get major list
      *
      * @return Object majors
      */
     public function create()
     {
-        $majors = $this->studentInterface->create();
+        $majors = $this->majorInterface->create();
         return view('student.create', compact('majors'));
     }
 
@@ -73,9 +81,9 @@ class StudentController extends Controller
      */
     public function edit($id)
     {   
-        $editArr = $this->studentInterface->edit($id);
-        $student = $editArr[0];
-        $majors = $editArr[1];
+        $student = $this->studentInterface->edit($id);
+        //get major list
+        $majors = $this->majorInterface->create();
         return view('student.edit', compact('student', 'majors'));
     }
 

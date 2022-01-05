@@ -15,14 +15,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
-        $majors = ['English', 'Math', 'Physics', 'Chemistry', 'Computer Science', 'Law'];
-        foreach($majors as $major) {
-            DB::table('majors')->insert(
-                [
-                    'name' => "$major"
-                ]
-            );
-        }
+        $majorseeder = new MajorSeeder;
+        $majorseeder->run();
     }
 }

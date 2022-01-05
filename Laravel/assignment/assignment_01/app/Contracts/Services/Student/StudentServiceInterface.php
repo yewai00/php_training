@@ -14,13 +14,6 @@ interface StudentServiceInterface {
     public function index();
 
     /**
-     * show create page
-     *
-     * @return Object majors
-     */
-    public function create();
-
-    /**
      * Store a student record
      *
      * @param  \Illuminate\Http\Request  $request

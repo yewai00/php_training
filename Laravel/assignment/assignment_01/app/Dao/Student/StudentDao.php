@@ -21,17 +21,6 @@ class StudentDao implements StudentDaoInterface {
     }
 
     /**
-     * show create page
-     *
-     * @return Object majors
-     */
-    public function create()
-    {
-        $majors = Major::all();
-        return $majors;
-    }
-
-    /**
      * Store a student record
      *
      * @param  \Illuminate\Http\Request  $request
@@ -58,8 +47,7 @@ class StudentDao implements StudentDaoInterface {
     public function edit($id)
     {
         $student = Student::find($id);
-        $majors = Major::all();
-        return [$student,$majors];
+        return $student;
     }
 
     /**

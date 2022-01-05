@@ -33,16 +33,6 @@ class StudentService implements StudentServiceInterface {
     }
 
     /**
-     * show create page
-     *
-     * @return Object majors
-     */
-    public function create()
-    {
-        return $this->studentDao->create();
-    }
-
-    /**
      * Store a student record
      *
      * @param  \Illuminate\Http\Request  $request
