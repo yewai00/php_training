@@ -2,12 +2,11 @@
 
 namespace Database\Seeders;
 
-
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
+use App\Models\Student;
 
-
-class DatabaseSeeder extends Seeder
+class StudentSeeder extends Seeder
 {
     /**
      * Seed the application's database.
@@ -16,10 +15,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        
-        $majorseeder = new MajorSeeder;
-        $majorseeder->run();
-        $studentseeder = new StudentSeeder;
-        $studentseeder->run();
+        Student::factory()->count(20)->create();
     }
 }

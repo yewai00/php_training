@@ -6,8 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Contracts\Services\Student\StudentServiceInterface;
 use App\Contracts\Services\Major\MajorServiceInterface;
-use App\Exports\StudentsExport;
-use Maatwebsite\Excel\Facades\Excel;
+use \Illuminate\Validation\Rule;
 
 class StudentController extends Controller
 {
@@ -27,10 +26,10 @@ class StudentController extends Controller
      * @param MajorServiceInterface $majorInerface
      * @return void
      */
-    public function __construct(StudentServiceInterface $studentServiceInterface, MajorServiceInterface $majorInerface)
+    public function __construct(StudentServiceInterface $studentServiceInterface, MajorServiceInterface $majorInterface)
     {
         $this->studentInterface = $studentServiceInterface;
-        $this->majorInterface = $majorInerface;
+        $this->majorInterface = $majorInterface;
     }
 
     /**
@@ -38,9 +37,9 @@ class StudentController extends Controller
      *
      * @return url to index with Object $students
      */
-    public function index()
+    public function index(Request $request)
     {
-        $students = $this->studentInterface->index();
+        $students = $this->studentInterface->index($request);
         return view('student.index', compact('students'));
     }
 
@@ -66,8 +65,8 @@ class StudentController extends Controller
         $request->validate([
             'first_name' => 'required',
             'last_name' => 'required',
-            'email' => 'required|email|unique:users',
-            'phone' => 'required|min:11|numeric',
+            'email' => 'required|email|unique:students',
+            'phone' => 'required|min:11',
             'address' => 'required',
             'major_id' => 'required'
         ]);
@@ -101,8 +100,8 @@ class StudentController extends Controller
         $request->validate([
             'first_name' => 'required',
             'last_name' => 'required',
-            'email' => 'required|email|unique:users',
-            'phone' => 'required|min:11|numeric',
+            'email' => ['required', 'email',Rule::unique('students')->ignore($id)],
+            'phone' => 'required|min:11',
             'address' => 'required',
             'major_id' => 'required'
         ]);
@@ -128,7 +127,7 @@ class StudentController extends Controller
      */
     public function export() 
     {
-        return Excel::download(new StudentsExport, 'students.xlsx');
+        return $this->studentInterface->export();
     }
 
     /**

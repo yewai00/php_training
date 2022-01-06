@@ -5,6 +5,9 @@ namespace App\Services\Student;
 use App\Contracts\Dao\Student\StudentDaoInterface;
 use Illuminate\Http\Request;
 use App\Contracts\Services\Student\StudentServiceInterface;
+use App\Dao\Student\StudentDao;
+use App\Exports\StudentsExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 class StudentService implements StudentServiceInterface {
 
@@ -27,11 +30,19 @@ class StudentService implements StudentServiceInterface {
      *
      * @return Object $students
      */
-    public function index()
+    public function index(Request $request)
     {
-        return $this->studentDao->index();
+        return $this->studentDao->index($request);
     }
 
+     /**
+     * get students list
+     */
+    public function getlist() 
+    {
+        return $this->studentDao->getlist();
+    }
+    
     /**
      * Store a student record
      *
@@ -75,6 +86,15 @@ class StudentService implements StudentServiceInterface {
     public function destroy($id)
     {
         return $this->studentDao->destroy($id);
+    }
+
+    /**
+     * download as excel file from student table
+     * 
+     */
+    public function export() 
+    {
+       return Excel::download(new StudentsExport($this->studentDao->export()), 'students.xlsx');
     }
 
     /**

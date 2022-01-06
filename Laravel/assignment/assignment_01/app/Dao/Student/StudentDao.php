@@ -8,6 +8,9 @@ use App\Models\Major;
 use Illuminate\Http\Request;
 use App\Imports\StudentsImport;
 use Maatwebsite\Excel\Facades\Excel;
+use App\Exports\StudentsExport;
+use App\Dao\Major\MajorDao;
+use Illuminate\Support\Facades\DB;
 
 class StudentDao implements StudentDaoInterface {
     
@@ -16,8 +19,39 @@ class StudentDao implements StudentDaoInterface {
      *
      * @return Object $students
      */
-    public function index()
+    public function index(Request $request)
     {
+        $keyword = $request->keyword;
+        $start = $request->start;
+        $end = $request->end;
+
+        $students = DB::table('students as student')
+            ->join('majors as major', 'student.major_id', '=', 'major.id')
+            ->select('student.*', 'major.name as major')
+            ->orderBy('student.id', 'asc');
+
+        if ($start) {
+            $students->whereDate('student.created_at', '>=', $start);
+        }
+
+        if ($end) {
+            $students->whereDate('student.created_at', '<=', $end);
+        }
+        
+        if ($keyword) {
+            $students->where('student.first_name', 'LIKE', '%' . $keyword . '%')
+                ->orwhere('student.last_name', 'LIKE', '%' . $keyword . '%')
+                ->orwhere('student.email', 'LIKE', '%' . $keyword . '%');
+        }
+        
+        return $students->get();
+
+    }
+
+    /**
+     * get students list
+     */
+    public function getlist() {
         $students = Student::with('major')->get();
         return $students;
     }
@@ -82,6 +116,10 @@ class StudentDao implements StudentDaoInterface {
         Student::find($id)->delete();
     }
 
+    public function export() 
+    {
+        return $this;
+    }
     /**
      * import data to students table
      * @param Request $request
@@ -89,15 +127,32 @@ class StudentDao implements StudentDaoInterface {
      */
     public function import(Request $request) {
         $students = Excel::toCollection(new StudentsImport(), $request->file('import_file'));
+        $isfirstrow = 0;
         foreach($students[0] as $student) {
-            Student::where('id', $student[0])->update([
-                'first_name' => $student[1],
-                'last_name' => $student[2],
-                'email' => $student[3],
-                'phone' => $student[4],
-                'address' => $student[5],
-                'major_id' => $student[6]
-            ]);
+            if($isfirstrow) {
+                if (DB::table('students')->where('id', $student[0])->doesntExist()) {
+                    Student::insert([
+                        'id' => $student[0],
+                        'first_name' => $student[1],
+                        'last_name' => $student[2],
+                        'email' => $student[3],
+                        'phone' => $student[4],
+                        'address' => $student[5],
+                        'major_id' => $student[7],
+                        'created_at' => date('Y-m-d')." ". date("h:i:s")
+                    ]);
+                } else {
+                    Student::where('id', $student[0])->update([
+                        'first_name' => $student[1],
+                        'last_name' => $student[2],
+                        'email' => $student[3],
+                        'phone' => $student[4],
+                        'address' => $student[5],
+                        'major_id' => $student[7]
+                    ]);   
+                }
+            }
+            $isfirstrow++;
         }
     }
 }

@@ -11,7 +11,12 @@ interface StudentServiceInterface {
      *
      * @return Object $students
      */
-    public function index();
+    public function index(Request $request);
+
+    /**
+     * get students list
+     */
+    public function getlist();
 
     /**
      * Store a student record
@@ -52,4 +57,10 @@ interface StudentServiceInterface {
      * @return void
      */
     public function import(Request $request);
+
+    /**
+     * download as excel file from student table
+     * 
+     */
+    public function export();
 }
