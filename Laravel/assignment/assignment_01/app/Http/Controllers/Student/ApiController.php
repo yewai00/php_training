@@ -8,7 +8,7 @@ use App\Contracts\Services\Student\StudentServiceInterface;
 use App\Contracts\Services\Major\MajorServiceInterface;
 use \Illuminate\Validation\Rule;
 
-class StudentController extends Controller
+class ApiController extends Controller
 {
     /**
      * student interface
@@ -33,6 +33,36 @@ class StudentController extends Controller
     }
 
     /**
+     * show index page
+     */
+    public function showList() {
+        return view('ajax.student.index');
+    }
+
+    /**
+     * show create page
+     */
+    
+    public function showCreate() {
+        return view('ajax.student.create');
+    }
+
+    /**
+     * show edit page
+     */
+    public function showEdit() {
+        return view('ajax.student.edit');
+    }
+
+    /**
+     * show selected id data
+     */
+    public function editAjax($id){
+        $student = $this->studentInterface->edit($id);
+        return $student;
+    }
+
+    /**
      * index page show students list
      * @param Request $request
      * @return url to index with Object $students
@@ -43,6 +73,19 @@ class StudentController extends Controller
         return view('student.index', compact('students'));
     }
 
+    /**
+     * get student list with major
+     */
+    public function getList() {
+        return $this->studentInterface->getStuList()->get();   
+    }
+
+    /**
+     * get major list
+     */
+    public function getMajors() {
+        return $this->majorInterface->create();
+    }
     /**
      * get major list
      *
@@ -106,7 +149,6 @@ class StudentController extends Controller
             'major_id' => 'required'
         ]);
         $this->studentInterface->update($request, $id);
-        return redirect('/students')->with('success','You have successfully updated.');
     }
 
     /**
@@ -118,7 +160,6 @@ class StudentController extends Controller
     public function destroy($id)
     {
         $this->studentInterface->destroy($id);
-        return redirect('/students')->with('success','You have successfully deleted.');
     }
 
     /**

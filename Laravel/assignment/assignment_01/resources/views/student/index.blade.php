@@ -25,7 +25,7 @@
       </div>
     </div><!-- export import-->
       <div class="mt-4">
-        <form class="form-inline" action="" method="">
+        <form class="form-inline" action="{{ url('students') }}" method="GET">
           @csrf
           <div class="row"> 
             <div class="col">

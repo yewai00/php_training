@@ -27,12 +27,19 @@ class StudentService implements StudentServiceInterface {
 
     /**
      * index page show students list
-     *
+     * @param Request $request
      * @return Object $students
      */
     public function index(Request $request)
     {
         return $this->studentDao->index($request);
+    }
+
+    /**
+     * get students list with major
+     */
+    public function getStuList(){
+        return $this->studentDao->getStuList();
     }
 
      /**

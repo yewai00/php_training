@@ -7,10 +7,15 @@ interface StudentDaoInterface {
 
      /**
      * index page show students list
-     *
+     * @param Request $request
      * @return Object $students
      */
     public function index(Request $request);
+
+    /**
+     * get students list with major
+     */
+    public function getStuList();
 
     /**
      * get students list

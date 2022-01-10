@@ -16,7 +16,7 @@ class StudentDao implements StudentDaoInterface {
     
      /**
      * index page show students list
-     *
+     * @param Request $request
      * @return Object $students
      */
     public function index(Request $request)
@@ -25,11 +25,7 @@ class StudentDao implements StudentDaoInterface {
         $start = $request->start;
         $end = $request->end;
 
-        $students = DB::table('students as student')
-            ->join('majors as major', 'student.major_id', '=', 'major.id')
-            ->select('student.*', 'major.name as major')
-            ->orderBy('student.id', 'asc');
-
+        $students = $this->getStuList();
         if ($start) {
             $students->whereDate('student.created_at', '>=', $start);
         }
@@ -45,7 +41,16 @@ class StudentDao implements StudentDaoInterface {
         }
         
         return $students->get();
+    }
 
+    /**
+     * get students list with major
+     */
+    public function getStuList() {
+        return DB::table('students as student')
+        ->join('majors as major', 'student.major_id', '=', 'major.id')
+        ->select('student.*', 'major.name as major')
+        ->orderBy('student.id', 'asc');
     }
 
     /**

@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Student\StudentController;
+use App\Http\Controllers\Student\ApiController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -16,9 +17,13 @@ use App\Http\Controllers\Student\StudentController;
 Route::get('/', function () {
     return redirect('students');
 });
+Route::resource('students', StudentController::class);
 
+//route for export import 
 Route::get('students/export', [StudentController::class, 'export']);
-
 Route::post('students/import', [StudentController::class, 'import']);
 
-Route::resource('students', StudentController::class);
+//api route
+Route::get('/ajax/students/' , [ApiController::class, 'showList']);
+Route::get('/ajax/students/create' , [ApiController::class, 'showCreate']);
+Route::get('/ajax/students/{student}/edit' , [ApiController::class, 'showEdit']);
