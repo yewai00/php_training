@@ -1,7 +1,8 @@
 $(function(){
+  const DOMAIN = "http://127.0.0.1:8000/";
   $.ajax({
     type: 'GET',
-    url: 'http://localhost:8000/api/students/list',
+    url: DOMAIN + 'api/students/list',
     success: function(result) {
       result.forEach(student => {
         $('tbody').append(
@@ -26,7 +27,7 @@ $(function(){
   $(document).on("click",'.delete' , function() {
     let id = $(this).attr("data-id");
     $.ajax({
-      url: 'http://127.0.0.1:8000/api/students/'+ id,
+      url: DOMAIN + 'api/students/'+ id,
       method: 'DELETE',
       success: function() {
           $("#"+id).remove();

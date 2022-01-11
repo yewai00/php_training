@@ -1,6 +1,7 @@
 $(function () {
+  const DOMAIN = "http://127.0.0.1:8000/";
   $.ajax({
-    url: 'http://localhost:8000/api/students/majorsList',
+    url: DOMAIN + 'api/students/majorsList',
     method: 'GET',
     success: function (data) {
       if (data) {
@@ -15,7 +16,7 @@ $(function () {
   $('#submit').on('click', function(e){
     e.preventDefault();
     $.ajax({
-      url: 'http://127.0.0.1:8000/students',
+      url: DOMAIN + 'students',
       method: 'POST',
       data: $('#form').serialize(),
       success: function() {

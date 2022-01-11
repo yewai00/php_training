@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 use App\Contracts\Services\Student\StudentServiceInterface;
 use App\Contracts\Services\Major\MajorServiceInterface;
 use \Illuminate\Validation\Rule;
+use App\Mail\WelcomeMail;
+use App\Mail\TopStudentsList;
+use Illuminate\Support\Facades\Mail;
 
 class StudentController extends Controller
 {
@@ -71,6 +74,7 @@ class StudentController extends Controller
             'major_id' => 'required'
         ]);
         $this->studentInterface->store($request);
+        $this->sendMail($request->email);
         return redirect('/students')->with('success', 'You have successfully created');
     }
 
@@ -142,5 +146,45 @@ class StudentController extends Controller
         ]);
         $this->studentInterface->import($request);
         return redirect('/students')->with('success','You have successfully imported.');;
+    }
+
+    /**
+     * send email to 
+     * @param string $email
+     * return Object
+     */
+    public function sendMail($email) {
+        Mail::to($email)->send(new WelcomeMail());
+        return new WelcomeMail();
+    }
+    
+    /**
+     *  get Students list
+     *  @return object $students;
+     */
+    public function getStuList(){
+        $students = $this->studentInterface->getStuList()->get();
+        return $students;
+    }
+
+    /**
+     * mail to incharge 
+     * @param Request $request
+     * return Object $topStudents;
+     */
+    public function toincharge(Request $request) {
+        $email = $request->email;
+        $students = $this->getStuList();    
+        $topStudents = new TopStudentsList(collect($students));
+        Mail::to($email)->send($topStudents);
+        return $topStudents;
+    }
+
+    /**
+     * show input email form 
+     * @return view
+     */
+    public function viewToincharge() {
+        return view('emails.toincharge');
     }
 }

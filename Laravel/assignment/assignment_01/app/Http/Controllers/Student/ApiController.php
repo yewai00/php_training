@@ -63,17 +63,6 @@ class ApiController extends Controller
     }
 
     /**
-     * index page show students list
-     * @param Request $request
-     * @return url to index with Object $students
-     */
-    public function index(Request $request)
-    {
-        $students = $this->studentInterface->index($request);
-        return view('student.index', compact('students'));
-    }
-
-    /**
      * get student list with major
      */
     public function getList() {
@@ -86,51 +75,7 @@ class ApiController extends Controller
     public function getMajors() {
         return $this->majorInterface->create();
     }
-    /**
-     * get major list
-     *
-     * @return Object majors
-     */
-    public function create()
-    {
-        $majors = $this->majorInterface->create();
-        return view('student.create', compact('majors'));
-    }
-
-    /**
-     * Store a student record
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return redirect to index with message.
-     */
-    public function store(Request $request)
-    {
-        $request->validate([
-            'first_name' => 'required',
-            'last_name' => 'required',
-            'email' => 'required|email|unique:students',
-            'phone' => 'required|min:11',
-            'address' => 'required',
-            'major_id' => 'required'
-        ]);
-        $this->studentInterface->store($request);
-        return redirect('/students')->with('success', 'You have successfully created');
-    }
-
-    /**
-     * show update page
-     *
-     * @param  int  $id
-     * @return  Object student , majors
-     */
-    public function edit($id)
-    {   
-        $student = $this->studentInterface->edit($id);
-        //get major list
-        $majors = $this->majorInterface->create();
-        return view('student.edit', compact('student', 'majors'));
-    }
-
+  
     /**
      * Update the specified resource in storage.
      *
@@ -162,26 +107,4 @@ class ApiController extends Controller
         $this->studentInterface->destroy($id);
     }
 
-    /**
-     * download as excel file from student table
-     * 
-     */
-    public function export() 
-    {
-        return $this->studentInterface->export();
-    }
-
-    /**
-     * import data to student table
-     * @param Request $request
-     * @return url to students page
-     */
-    public function import(Request $request) 
-    {   
-        $request->validate([
-            'import_file' => 'required',
-        ]);
-        $this->studentInterface->import($request);
-        return redirect('/students')->with('success','You have successfully imported.');;
-    }
 }

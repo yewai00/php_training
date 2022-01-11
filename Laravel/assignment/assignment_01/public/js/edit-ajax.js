@@ -1,7 +1,8 @@
 let id = location.href.split('/')[5];
 $(function () {
+  const DOMAIN = "http://127.0.0.1:8000/";
   $.ajax({
-    url: 'http://localhost:8000/api/students/majorsList',
+    url: DOMAIN + 'api/students/majorsList',
     method: 'GET',
     success: function (data) {
       if (data) {
@@ -14,7 +15,7 @@ $(function () {
     }
   })
   $.ajax({
-    url: 'http://localhost:8000/api/students/'+ id + '/edit',
+    url: DOMAIN + 'api/students/'+ id + '/edit',
     methot: 'GET',
     success: function (data) {
       if(data) {
@@ -27,9 +28,8 @@ $(function () {
   });
   $('#submit').on('click', function(e){
     e.preventDefault();
-    console.log(id);
     $.ajax({
-      url: "http://127.0.0.1:8000/api/students/" + id,
+      url: DOMAIN + "api/students/" + id,
       type: 'PUT',
       data: $('#form').serialize(),
       success: function() {
