@@ -10,7 +10,10 @@ use \Illuminate\Validation\Rule;
 use App\Mail\WelcomeMail;
 use App\Mail\TopStudentsList;
 use Illuminate\Support\Facades\Mail;
-
+use App\Http\Requests\StoreStudentRequest;
+use App\Http\Requests\UpdateStudentRequest;
+use App\Http\Requests\ImportFileRequest;
+use App\Http\Requests\MailRequest;
 class StudentController extends Controller
 {
     /**
@@ -43,7 +46,8 @@ class StudentController extends Controller
     public function index(Request $request)
     {
         $students = $this->studentInterface->index($request);
-        return view('student.index', compact('students'));
+        return view('student.index')
+            ->with('students', $students);
     }
 
     /**
@@ -54,7 +58,8 @@ class StudentController extends Controller
     public function create()
     {
         $majors = $this->majorInterface->create();
-        return view('student.create', compact('majors'));
+        return view('student.create')
+            ->with('majors', $majors);
     }
 
     /**
@@ -63,16 +68,8 @@ class StudentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return redirect to index with message.
      */
-    public function store(Request $request)
+    public function store(StoreStudentRequest $request)
     {
-        $request->validate([
-            'first_name' => 'required',
-            'last_name' => 'required',
-            'email' => 'required|email|unique:students',
-            'phone' => 'required|min:11',
-            'address' => 'required',
-            'major_id' => 'required'
-        ]);
         $this->studentInterface->store($request);
         $this->sendMail($request->email);
         return redirect('/students')->with('success', 'You have successfully created');
@@ -89,7 +86,9 @@ class StudentController extends Controller
         $student = $this->studentInterface->edit($id);
         //get major list
         $majors = $this->majorInterface->create();
-        return view('student.edit', compact('student', 'majors'));
+        return view('student.edit')
+            ->with('student', $student)
+            ->with('majors', $majors);
     }
 
     /**
@@ -99,16 +98,8 @@ class StudentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-        $request->validate([
-            'first_name' => 'required',
-            'last_name' => 'required',
-            'email' => ['required', 'email',Rule::unique('students')->ignore($id)],
-            'phone' => 'required|min:11',
-            'address' => 'required',
-            'major_id' => 'required'
-        ]);
+    public function update(UpdateStudentRequest $request, $id)
+    {    
         $this->studentInterface->update($request, $id);
         return redirect('/students')->with('success','You have successfully updated.');
     }
@@ -139,11 +130,8 @@ class StudentController extends Controller
      * @param Request $request
      * @return url to students page
      */
-    public function import(Request $request) 
+    public function import(ImportFileRequest $request) 
     {   
-        $request->validate([
-            'import_file' => 'required',
-        ]);
         $this->studentInterface->import($request);
         return redirect('/students')->with('success','You have successfully imported.');;
     }
@@ -173,7 +161,7 @@ class StudentController extends Controller
      * @param Request $request
      * return Object $topStudents;
      */
-    public function toincharge(Request $request) {
+    public function toincharge(MailRequest $request) {
         $email = $request->email;
         $students = $this->getStuList();    
         $topStudents = new TopStudentsList($students);

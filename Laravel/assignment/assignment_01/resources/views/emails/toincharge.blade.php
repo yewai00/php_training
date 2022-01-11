@@ -16,7 +16,10 @@
           @csrf
           <div class="form-group mb-3">
             <label for="exampleInputEmail1">Email address:</label>
-            <input type="email" class="form-control" name="email" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email of the Incharge">
+            <input type="email" class="form-control @error('email') is-invalid @enderror" name="email" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email of the Incharge">
+            @error('email')
+              <div class="invalid-feedback">{{ $message }}</div>
+            @enderror
           </div>
           <button type="submit" class="btn btn-primary">Submit</button>
         </form>

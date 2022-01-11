@@ -69,14 +69,16 @@ class StudentDao implements StudentDaoInterface {
      */
     public function store(Request $request)
     {
-        Student::create([
-            'first_name' => $request->first_name,
-            'last_name' => $request->last_name,
-            'email' => $request->email,
-            'phone' => $request->phone,
-            'address' => $request->address,
-            'major_id' => $request->major_id,
-        ]);
+        DB::transaction(function () use ($request) {
+            Student::create([
+                'first_name' => $request->first_name,
+                'last_name' => $request->last_name,
+                'email' => $request->email,
+                'phone' => $request->phone,
+                'address' => $request->address,
+                'major_id' => $request->major_id,
+            ]);
+        }, 5);
     }
 
     /**
@@ -100,14 +102,16 @@ class StudentDao implements StudentDaoInterface {
      */
     public function update(Request $request, $id)
     {
-        Student::find($id)->update([
-            'first_name' => $request->first_name,
-            'last_name' => $request->last_name,
-            'email' => $request->email,
-            'phone' => $request->phone,
-            'address' => $request->address,
-            'major_id' => $request->major_id
-        ]);
+        DB::transaction(function () use ($request, $id){
+            Student::find($id)->update([
+                'first_name' => $request->first_name,
+                'last_name' => $request->last_name,
+                'email' => $request->email,
+                'phone' => $request->phone,
+                'address' => $request->address,
+                'major_id' => $request->major_id
+            ]);
+        }, 5);
     }
 
     /**
@@ -118,7 +122,9 @@ class StudentDao implements StudentDaoInterface {
      */
     public function destroy($id)
     {
-        Student::find($id)->delete();
+        DB::transaction(function () use ($id) {
+            Student::find($id)->delete();
+        }, 5);
     }
 
     public function export() 
@@ -136,25 +142,29 @@ class StudentDao implements StudentDaoInterface {
         foreach($students[0] as $student) {
             if($isfirstrow) {
                 if (DB::table('students')->where('id', $student[0])->doesntExist()) {
-                    Student::insert([
-                        'id' => $student[0],
-                        'first_name' => $student[1],
-                        'last_name' => $student[2],
-                        'email' => $student[3],
-                        'phone' => $student[4],
-                        'address' => $student[5],
-                        'major_id' => $student[7],
-                        'created_at' => date('Y-m-d')." ". date("h:i:s")
-                    ]);
+                    DB::transaction(function () use ($student){
+                        Student::insert([
+                            'id' => $student[0],
+                            'first_name' => $student[1],
+                            'last_name' => $student[2],
+                            'email' => $student[3],
+                            'phone' => $student[4],
+                            'address' => $student[5],
+                            'major_id' => $student[7],
+                            'created_at' => date('Y-m-d')." ". date("h:i:s")
+                        ]);
+                    }, 5);
                 } else {
-                    Student::where('id', $student[0])->update([
-                        'first_name' => $student[1],
-                        'last_name' => $student[2],
-                        'email' => $student[3],
-                        'phone' => $student[4],
-                        'address' => $student[5],
-                        'major_id' => $student[7]
-                    ]);   
+                    DB::transaction(function () use ($student){
+                        Student::where('id', $student[0])->update([
+                            'first_name' => $student[1],
+                            'last_name' => $student[2],
+                            'email' => $student[3],
+                            'phone' => $student[4],
+                            'address' => $student[5],
+                            'major_id' => $student[7]
+                        ]);   
+                    }, 5);
                 }
             }
             $isfirstrow++;
