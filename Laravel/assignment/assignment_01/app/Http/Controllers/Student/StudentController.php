@@ -154,8 +154,9 @@ class StudentController extends Controller
      * return Object
      */
     public function sendMail($email) {
-        Mail::to($email)->send(new WelcomeMail());
-        return new WelcomeMail();
+        $mail = new WelcomeMail();
+        $this->studentInterface->sendMail($email, $mail);
+        return $mail;
     }
     
     /**
@@ -175,8 +176,8 @@ class StudentController extends Controller
     public function toincharge(Request $request) {
         $email = $request->email;
         $students = $this->getStuList();    
-        $topStudents = new TopStudentsList(collect($students));
-        Mail::to($email)->send($topStudents);
+        $topStudents = new TopStudentsList($students);
+        $this->studentInterface->sendMail($email, $topStudents);
         return $topStudents;
     }
 

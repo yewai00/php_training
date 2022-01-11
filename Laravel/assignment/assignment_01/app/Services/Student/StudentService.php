@@ -8,6 +8,7 @@ use App\Contracts\Services\Student\StudentServiceInterface;
 use App\Dao\Student\StudentDao;
 use App\Exports\StudentsExport;
 use Maatwebsite\Excel\Facades\Excel;
+use Illuminate\Support\Facades\Mail;
 
 class StudentService implements StudentServiceInterface {
 
@@ -111,5 +112,14 @@ class StudentService implements StudentServiceInterface {
     public function import(Request $request)
     {
         return $this->studentDao->import($request);
+    }
+
+     /**
+     * send mail
+     * @param string $email 
+     * @param object $mail
+     */
+    public function sendMail(string $email,object $mail) {
+        Mail::to($email)->send($mail);
     }
 }   

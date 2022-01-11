@@ -68,4 +68,11 @@ interface StudentServiceInterface {
      * 
      */
     public function export();
+
+    /**
+     * send mail
+     * @param string $email 
+     * @param object $mail
+     */
+    public function sendMail(string $email,object $mail);
 }
